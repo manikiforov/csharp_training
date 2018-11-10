@@ -43,7 +43,7 @@ namespace WebAddressbookTests
         public void GroupCreationTest()
         {
             OpenHomePage();
-            Login("admin","Secret");
+            Login("admin","secret");
             GoToGroupsPage();
             InitGroupCreation();
             FillGroupForm("aaa", "sss", "ddd");
