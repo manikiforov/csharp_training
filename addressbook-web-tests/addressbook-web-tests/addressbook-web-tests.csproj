@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GroupCreationTests.cs" />
     <Compile Include="Task4_ContactCreationTest.cs" />
+    <Compile Include="Task5_ContactRemovalTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -20,8 +20,9 @@ namespace WebAddressbookTests
             group.Header = "ddd";
             group.Footer = "fff";
             FillGroupForm(group);
-            SubmitGroupCreation();
+            Submit();
             ReturnToGroupsPage();
+            Logout();
         }
 
                  
