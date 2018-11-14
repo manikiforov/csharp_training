@@ -12,12 +12,12 @@ namespace WebAddressbookTests
         [Test]
         public void Task5_ContactRemovalTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            SelectItem(1);
-            ConfirmDel();
-            DeleteContact();
-            GoToHomePage();
+            navigator.GoToHomePage();
+            loginHelper.Login(new AccountData("admin", "secret"));
+            selectSubmitHelper.SelectItem(1);
+            contactHelper.ConfirmDel();
+            contactHelper.DeleteContact();
+            navigator.GoToHomePage();
         }
 
     }
