@@ -11,7 +11,7 @@ namespace WebAddressbookTests
 {
     public class SelectSubmitHelper : HelperBase
     {
-        public SelectSubmitHelper(IWebDriver driver) : base(driver)
+        public SelectSubmitHelper(ApplicationManager manager) : base(manager)
 
         {
         }

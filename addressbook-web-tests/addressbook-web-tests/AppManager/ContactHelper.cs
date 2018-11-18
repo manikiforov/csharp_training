@@ -15,9 +15,32 @@ namespace WebAddressbookTests
     {
         protected bool acceptNextAlert = true;
 
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
 
         {
+        }
+
+        public ContactHelper Create(ContactData contact)
+        {
+            AddNewContact();
+            InputContactData(contact);
+
+            manager.SelectSubmit.Submit();
+            manager.Auth.Logout();
+
+            return this;
+        }
+
+        public ContactHelper Remove (int p)
+        {
+            manager.SelectSubmit.SelectItem(1);
+
+            ConfirmDel();
+            DeleteContact();
+
+            manager.Navigator.GoToHomePage();
+
+            return this;
         }
 
         public string CloseAlertAndGetItsText()
@@ -42,12 +65,13 @@ namespace WebAddressbookTests
             }
         }
 
-        public void AddNewContact()
+        public ContactHelper AddNewContact()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
 
-        public void InputContactData(ContactData contact)
+        public ContactHelper InputContactData(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
@@ -58,17 +82,20 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("nickname")).Click();
             driver.FindElement(By.Name("nickname")).Clear();
             driver.FindElement(By.Name("nickname")).SendKeys(contact.Nickname);
+            return this;
         }
 
-        public void ConfirmDel()
+        public ContactHelper ConfirmDel()
         {
             acceptNextAlert = true;
+            return this;
         }
 
-        public void DeleteContact()
+        public ContactHelper DeleteContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            return this;
         }
     }
 }

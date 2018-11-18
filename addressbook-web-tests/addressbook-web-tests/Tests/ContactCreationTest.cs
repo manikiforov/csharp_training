@@ -10,19 +10,26 @@ namespace WebAddressbookTests
     public class ContactCreationTests : TestBase
     {
         [Test]
-        public void Task4_ContactCreationTest()
+        public void ContactCreationTest()
         {
-            navigator.GoToHomePage();
-            loginHelper.Login(new AccountData("admin", "secret"));
-            contactHelper.AddNewContact();
             ContactData contact = new ContactData("Marty");
             contact.Lastname = "McFly";
             contact.Nickname = "Schoolboy";
-            contactHelper.InputContactData(contact);
-            selectSubmitHelper.Submit();
-            loginHelper.Logout();
+
+            app.Contacts.Create(contact);
+                
         }
 
-                       
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contact = new ContactData("");
+            contact.Lastname = "";
+            contact.Nickname = "";
+
+            app.Contacts.Create(contact);
+
+        }
+
     }
 }

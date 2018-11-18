@@ -11,17 +11,45 @@ namespace WebAddressbookTests
 {
    public class GroupHelper : HelperBase
     {
-        public GroupHelper(IWebDriver driver) : base (driver)
+        public GroupHelper(ApplicationManager manager) : base (manager)
 
         {
         }
 
-        public void InitGroupCreation()
+        public GroupHelper Create(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+
+            InitGroupCreation();
+            FillGroupForm(group);
+
+            manager.SelectSubmit.Submit();
+            manager.Groups.ReturnToGroupsPage();
+            manager.Auth.Logout();
+
+            return this;
+        }
+
+        public GroupHelper Remove(int p)
+        {
+            manager.Navigator.GoToGroupsPage();
+            manager.SelectSubmit.SelectItem(1);
+
+            RemoveGroup();
+            ReturnToGroupsPage();
+
+            manager.Auth.Logout();
+            return this;
+            
+        }
+
+        public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
+            return this;
         }
 
-        public void FillGroupForm(GroupData group)
+        public GroupHelper FillGroupForm(GroupData group)
         {
             driver.FindElement(By.Name("group_name")).Click();
             driver.FindElement(By.Name("group_name")).Clear();
@@ -32,16 +60,19 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("group_footer")).Click();
             driver.FindElement(By.Name("group_footer")).Clear();
             driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            return this;
         }
 
-        public void ReturnToGroupsPage()
+        public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();
+            return this;
         }
 
-        public void RemoveGroup()
+        public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+            return this;
         }
     }
 }
