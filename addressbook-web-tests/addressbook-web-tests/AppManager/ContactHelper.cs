@@ -35,7 +35,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             manager.SelectSubmit.SelectItem(p);
-            InitContactModification();
+            InitContactModification(p);
             InputContactData(newData);
             SubmitContactModification();
             manager.Navigator.GoToHomePage();
@@ -111,9 +111,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private ContactHelper InitContactModification()
+        private ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + " ]")).Click();
             return this;
         }
 
