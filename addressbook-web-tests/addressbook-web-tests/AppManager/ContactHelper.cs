@@ -26,7 +26,7 @@ namespace WebAddressbookTests
             InputContactData(contact);
 
             manager.SelectSubmit.Submit();
-            manager.Auth.Logout();
+            //manager.Auth.Logout();
 
             return this;
         }
@@ -51,7 +51,7 @@ namespace WebAddressbookTests
             ConfirmDel();
             DeleteContact();
 
-            manager.Navigator.GoToHomePage();
+            //manager.Navigator.GoToHomePage();
 
             return this;
         }

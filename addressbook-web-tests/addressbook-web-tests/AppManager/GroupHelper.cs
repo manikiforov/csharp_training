@@ -53,7 +53,7 @@ namespace WebAddressbookTests
             RemoveGroup();
             ReturnToGroupsPage();
 
-            manager.Auth.Logout();
+            //manager.Auth.Logout();
             return this;
             
         }
