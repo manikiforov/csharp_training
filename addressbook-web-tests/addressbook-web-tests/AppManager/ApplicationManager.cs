@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -24,8 +25,9 @@ namespace WebAddressbookTests
         protected SelectSubmitHelper selectSubmitHelper;
         protected ContactHelper contactHelper;
 
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-        public ApplicationManager()
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook/";
@@ -37,7 +39,29 @@ namespace WebAddressbookTests
             selectSubmitHelper = new SelectSubmitHelper(this);
             contactHelper = new ContactHelper(this);
         }
-        
+
+        ~ApplicationManager()
+        {
+            try
+            {
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                // Ignore errors if unable to close the browser
+            }
+            Assert.AreEqual("", verificationErrors.ToString());
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+            }
+            return app.Value;
+        }
+
         public IWebDriver Driver
         {
             get
@@ -51,19 +75,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public void Stop()
-        {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
-            }
-            Assert.AreEqual("", verificationErrors.ToString());
-        }
-
+        
         public LoginHelper Auth
         {
             get
@@ -104,6 +116,5 @@ namespace WebAddressbookTests
             }
         }
 
-       
     }
 }

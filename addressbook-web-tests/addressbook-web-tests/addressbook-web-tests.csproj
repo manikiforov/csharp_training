@@ -76,6 +76,7 @@
     <Compile Include="Tests\GroupCreationTests.cs" />
     <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />
+    <Compile Include="Tests\TestSuiteFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
