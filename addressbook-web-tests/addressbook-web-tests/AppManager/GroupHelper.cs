@@ -27,7 +27,7 @@ namespace WebAddressbookTests
 
             ReturnToGroupsPage();
 
-            manager.Auth.Logout();
+            //manager.Auth.Logout();
 
             return this;
         }
