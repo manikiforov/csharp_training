@@ -14,11 +14,15 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newContact = new ContactData("Tomas");
-            newContact.Lastname = "Anderson";
-            newContact.Nickname = "NEO";
+            ContactData contact = new ContactData("");
+            contact.Lastname = "";
+            contact.Nickname = "";
 
-            app.Contacts.Modify(2, newContact);
+            ContactData newContact = new ContactData("Harry");
+            newContact.Lastname = "Potter";
+            newContact.Nickname = "Wizard";
+
+            app.Contacts.Modify(1, contact, newContact);
 
         }
     }

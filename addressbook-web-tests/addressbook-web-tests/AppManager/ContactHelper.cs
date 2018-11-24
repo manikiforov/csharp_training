@@ -26,34 +26,43 @@ namespace WebAddressbookTests
             InputContactData(contact);
 
             manager.SelectSubmit.Submit();
+            manager.Navigator.GoToHomePage();
             //manager.Auth.Logout();
 
             return this;
         }
 
-        public ContactHelper Modify(int p, ContactData newData)
+        public ContactHelper Modify(int p, ContactData contact, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
+
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(contact);
+            }
+
             manager.SelectSubmit.SelectItem(p);
             InitContactModification(p);
             InputContactData(newData);
             SubmitContactModification();
             manager.Navigator.GoToHomePage();
-
             return this;
         }
 
        
-        public ContactHelper Remove (int p)
+        public ContactHelper Remove (int p, ContactData contact)
         {
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(contact);
+            }
+           
             manager.SelectSubmit.SelectItem(p);
-
             ConfirmDel();
             DeleteContact();
-
-            //manager.Navigator.GoToHomePage();
-
+            manager.Navigator.GoToHomePage();
             return this;
+              
         }
 
         public string CloseAlertAndGetItsText()
@@ -116,5 +125,24 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
             return this;
         }
+
+        //public ContactHelper SubModify(int p, ContactData newData)
+        //{
+            //manager.SelectSubmit.SelectItem(p);
+            //InitContactModification(p);
+            //InputContactData(newData);
+            //SubmitContactModification();
+            //manager.Navigator.GoToHomePage();
+            //return this;
+        //}
+
+        //public ContactHelper SubRemove(int p)
+        //{
+            //manager.SelectSubmit.SelectItem(p);
+            //ConfirmDel();
+            //DeleteContact();
+            //manager.Navigator.GoToHomePage();
+            //return this;
+        //}
     }
 }

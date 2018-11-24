@@ -22,9 +22,7 @@ namespace WebAddressbookTests
 
             InitGroupCreation();
             FillGroupForm(group);
-
             manager.SelectSubmit.Submit();
-
             ReturnToGroupsPage();
 
             //manager.Auth.Logout();
@@ -32,30 +30,37 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Modify(int p, GroupData newData)
+        public GroupHelper Modify(int p, GroupData group, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(group);
+            }
+           
             manager.SelectSubmit.SelectItem(p);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
             ReturnToGroupsPage();
-
             return this;
         }
 
         
-        public GroupHelper Remove(int p)
+        public GroupHelper Remove(int p, GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
-            manager.SelectSubmit.SelectItem(p);
 
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(group);
+            }
+
+            manager.SelectSubmit.SelectItem(p);
             RemoveGroup();
             ReturnToGroupsPage();
-
-            //manager.Auth.Logout();
             return this;
-            
         }
 
         public GroupHelper InitGroupCreation()
@@ -97,5 +102,23 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
+
+        //public GroupHelper SubModify (int p, GroupData newData)
+        //{
+            //manager.SelectSubmit.SelectItem(p);
+            //InitGroupModification();
+            //FillGroupForm(newData);
+            //SubmitGroupModification();
+            //ReturnToGroupsPage();
+            //return this;
+        //}
+
+        //public GroupHelper SubRemove (int p)
+        //{
+            //manager.SelectSubmit.SelectItem(p);
+            //RemoveGroup();
+            //ReturnToGroupsPage();
+            //return this;
+        //}
     }
 }
