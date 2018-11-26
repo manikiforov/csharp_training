@@ -24,23 +24,13 @@ namespace WebAddressbookTests
         {
             AddNewContact();
             InputContactData(contact);
-
             manager.SelectSubmit.Submit();
             manager.Navigator.GoToHomePage();
-            //manager.Auth.Logout();
-
             return this;
         }
 
         public ContactHelper Modify(int p, ContactData contact, ContactData newData)
         {
-            manager.Navigator.GoToHomePage();
-
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                Create(contact);
-            }
-
             manager.SelectSubmit.SelectItem(p);
             InitContactModification(p);
             InputContactData(newData);
@@ -52,11 +42,6 @@ namespace WebAddressbookTests
        
         public ContactHelper Remove (int p, ContactData contact)
         {
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                Create(contact);
-            }
-           
             manager.SelectSubmit.SelectItem(p);
             ConfirmDel();
             DeleteContact();

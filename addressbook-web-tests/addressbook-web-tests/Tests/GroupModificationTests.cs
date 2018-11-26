@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -21,6 +24,13 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("ppp");
             newData.Header = null;
             newData.Footer = null;
+
+            app.Groups.manager.Navigator.GoToGroupsPage();
+
+            if (!app.Groups.IsElementPresent(By.Name("selected[]")))
+            {
+                app.Groups.Create(group);
+            }
 
             app.Groups.Modify(1, group, newData);
         }
