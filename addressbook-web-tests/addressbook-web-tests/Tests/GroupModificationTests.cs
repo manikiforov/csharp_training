@@ -32,7 +32,14 @@ namespace WebAddressbookTests
                 app.Groups.Create(group);
             }
 
-            app.Groups.Modify(1, group, newData);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Modify(0, group, newData);
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace WebAddressbookTests
             return this;
         }
 
+        
         public GroupHelper Modify(int p, GroupData group, GroupData newData)
         {
             manager.SelectSubmit.SelectItem(p);
@@ -84,22 +85,37 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
+        }
+
+
         //public GroupHelper SubModify (int p, GroupData newData)
         //{
-            //manager.SelectSubmit.SelectItem(p);
-            //InitGroupModification();
-            //FillGroupForm(newData);
-            //SubmitGroupModification();
-            //ReturnToGroupsPage();
-            //return this;
+        //manager.SelectSubmit.SelectItem(p);
+        //InitGroupModification();
+        //FillGroupForm(newData);
+        //SubmitGroupModification();
+        //ReturnToGroupsPage();
+        //return this;
         //}
 
         //public GroupHelper SubRemove (int p)
         //{
-            //manager.SelectSubmit.SelectItem(p);
-            //RemoveGroup();
-            //ReturnToGroupsPage();
-            //return this;
+        //manager.SelectSubmit.SelectItem(p);
+        //RemoveGroup();
+        //ReturnToGroupsPage();
+        //return this;
         //}
     }
 }

@@ -111,23 +111,37 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("selected[]"));
+
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text));
+            }
+
+            return contacts;
+        }
+
         //public ContactHelper SubModify(int p, ContactData newData)
         //{
-            //manager.SelectSubmit.SelectItem(p);
-            //InitContactModification(p);
-            //InputContactData(newData);
-            //SubmitContactModification();
-            //manager.Navigator.GoToHomePage();
-            //return this;
+        //manager.SelectSubmit.SelectItem(p);
+        //InitContactModification(p);
+        //InputContactData(newData);
+        //SubmitContactModification();
+        //manager.Navigator.GoToHomePage();
+        //return this;
         //}
 
         //public ContactHelper SubRemove(int p)
         //{
-            //manager.SelectSubmit.SelectItem(p);
-            //ConfirmDel();
-            //DeleteContact();
-            //manager.Navigator.GoToHomePage();
-            //return this;
+        //manager.SelectSubmit.SelectItem(p);
+        //ConfirmDel();
+        //DeleteContact();
+        //manager.Navigator.GoToHomePage();
+        //return this;
         //}
     }
 }
