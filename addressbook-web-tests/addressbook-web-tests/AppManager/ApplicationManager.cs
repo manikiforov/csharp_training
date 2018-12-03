@@ -22,7 +22,7 @@ namespace WebAddressbookTests
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
         protected GroupHelper grouphelper;
-        protected SelectSubmitHelper selectSubmitHelper;
+        //protected SelectSubmitHelper selectSubmitHelper;
         protected ContactHelper contactHelper;
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
@@ -37,7 +37,7 @@ namespace WebAddressbookTests
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
             grouphelper = new GroupHelper(this);
-            selectSubmitHelper = new SelectSubmitHelper(this);
+            //selectSubmitHelper = new SelectSubmitHelper(this);
             contactHelper = new ContactHelper(this);
         }
 
@@ -104,13 +104,13 @@ namespace WebAddressbookTests
             }
         }
 
-        public SelectSubmitHelper SelectSubmit
+        /*public SelectSubmitHelper SelectSubmit
         {
             get
             {
                 return selectSubmitHelper;
             }
-        }
+        }*/
 
         public ContactHelper Contacts
         {

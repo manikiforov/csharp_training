@@ -24,14 +24,14 @@ namespace WebAddressbookTests
         {
             AddNewContact();
             InputContactData(contact);
-            manager.SelectSubmit.Submit();
+            SubmitContactCreation();
             manager.Navigator.GoToHomePage();
             return this;
         }
 
         public ContactHelper Modify(int p, ContactData contact, ContactData newData)
         {
-            manager.SelectSubmit.SelectItem(p);
+            SelectContact(p);
             InitContactModification(p);
             InputContactData(newData);
             SubmitContactModification();
@@ -42,12 +42,25 @@ namespace WebAddressbookTests
        
         public ContactHelper Remove (int p, ContactData contact)
         {
-            manager.SelectSubmit.SelectItem(p);
+            SelectContact(p);
             ConfirmDel();
             DeleteContact();
             manager.Navigator.GoToHomePage();
             return this;
               
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + " ]")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactCreation()
+        {
+            driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
+            return this;
         }
 
         public string CloseAlertAndGetItsText()
@@ -96,6 +109,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            contactCache = null;
             return this;
         }
 
@@ -108,6 +122,7 @@ namespace WebAddressbookTests
         private ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -116,40 +131,31 @@ namespace WebAddressbookTests
             return IsElementPresent(By.Name("selected[]"));
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//*[@id='maintable']/tbody/tr[@name='entry']")); // организуем список элементов строк из таблицы контактов
-
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                string Firstname = element.FindElement(By.XPath(".//td[3]")).Text; //забираем текст имени из строки
-                string Lastname = element.FindElement(By.XPath(".//td[2]")).Text; // забираем текст фамилии из строки
-                contacts.Add(new ContactData(Firstname,Lastname)); // формируем объект контакта с именем и фамилией
-            }
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
 
-            return contacts;
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//*[@id='maintable']/tbody/tr[@name='entry']")); // организуем список элементов строк из таблицы контактов
+
+                foreach (IWebElement element in elements)
+                {
+                    string Firstname = element.FindElement(By.XPath(".//td[3]")).Text; //забираем текст имени из строки
+                    string Lastname = element.FindElement(By.XPath(".//td[2]")).Text; // забираем текст фамилии из строки
+                    contactCache.Add(new ContactData(Firstname, Lastname)); // формируем объект контакта с именем и фамилией
+                }
+            }
+            return new List<ContactData>(contactCache);
         }
 
-        //public ContactHelper SubModify(int p, ContactData newData)
-        //{
-        //manager.SelectSubmit.SelectItem(p);
-        //InitContactModification(p);
-        //InputContactData(newData);
-        //SubmitContactModification();
-        //manager.Navigator.GoToHomePage();
-        //return this;
-        //}
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.XPath("//*[@id='maintable']/tbody/tr[@name='entry']")).Count;
+        }
 
-        //public ContactHelper SubRemove(int p)
-        //{
-        //manager.SelectSubmit.SelectItem(p);
-        //ConfirmDel();
-        //DeleteContact();
-        //manager.Navigator.GoToHomePage();
-        //return this;
-        //}
     }
 }
