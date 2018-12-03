@@ -27,7 +27,7 @@ namespace WebAddressbookTests
         }
 
         
-        public GroupHelper Modify(int p, GroupData group, GroupData newData)
+        public GroupHelper Modify(int p, GroupData newData)
         {
             SelectGroup(p);
             InitGroupModification();
@@ -37,7 +37,7 @@ namespace WebAddressbookTests
             return this;
         }
                 
-        public GroupHelper Remove(int p, GroupData group)
+        public GroupHelper Remove(int p)
         {
             SelectGroup(p);
             RemoveGroup();
@@ -116,7 +116,9 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
-                    groupCache.Add(new GroupData(element.Text));
+                    groupCache.Add(new GroupData(element.Text){
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                                                               });
                 }
             }
 

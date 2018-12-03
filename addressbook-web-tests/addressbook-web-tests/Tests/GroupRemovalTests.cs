@@ -16,20 +16,21 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
+            GroupData groupSpare = new GroupData("");
+            groupSpare.Header = "";
+            groupSpare.Footer = "";
 
             app.Groups.manager.Navigator.GoToGroupsPage();
 
             if (!app.Groups.GroupPresence())
             {
-                app.Groups.Create(group);
+                app.Groups.Create(groupSpare);
             }
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            app.Groups.Remove(0, group);
+            GroupData toBeRemoved = oldGroups[0];
+            app.Groups.Remove(0);
 
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 
@@ -37,6 +38,11 @@ namespace WebAddressbookTests
 
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+            }
 
         }
     }
