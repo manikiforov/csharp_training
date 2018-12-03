@@ -17,8 +17,8 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData contact = new ContactData("","");
-            contact.Nickname = "";
+            ContactData contactSpare = new ContactData("","");
+            contactSpare.Nickname = "";
 
             ContactData newContact = new ContactData("Harry","Potter");
             newContact.Nickname = "Wizard";
@@ -27,12 +27,13 @@ namespace WebAddressbookTests
 
             if (!app.Contacts.ContactPresence())
             {
-                app.Contacts.Create(contact);
+                app.Contacts.Create(contactSpare);
             }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData oldContactData = oldContacts[0];
 
-            app.Contacts.Modify(0, contact, newContact);
+            app.Contacts.Modify(0, newContact);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
@@ -42,6 +43,21 @@ namespace WebAddressbookTests
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.ContactId == oldContactData.ContactId)
+                {
+                    if (newContact.Lastname == contact.Lastname)
+                    {
+                        Assert.AreEqual(newContact.Firstname, contact.Firstname);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(newContact.Lastname, contact.Lastname);
+                    }
+                }
+            }
 
         }
     }

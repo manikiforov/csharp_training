@@ -16,19 +16,21 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            ContactData contact = new ContactData("","");
-            contact.Nickname = "";
+            ContactData contactSpare = new ContactData("","");
+            contactSpare.Nickname = "";
 
             app.Contacts.manager.Navigator.GoToHomePage();
 
             if (!app.Contacts.ContactPresence())
             {
-                app.Contacts.Create(contact);
+                app.Contacts.Create(contactSpare);
             }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            app.Contacts.Remove(0, contact);
+            ContactData ContoBeRemoved = oldContacts[0];
+
+            app.Contacts.Remove(0);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
@@ -36,6 +38,11 @@ namespace WebAddressbookTests
 
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.ContactId, ContoBeRemoved.ContactId);
+            }
 
         }
 

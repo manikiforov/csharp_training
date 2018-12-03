@@ -29,7 +29,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int p, ContactData contact, ContactData newData)
+        public ContactHelper Modify(int p, ContactData newData)
         {
             SelectContact(p);
             InitContactModification(p);
@@ -40,7 +40,7 @@ namespace WebAddressbookTests
         }
 
        
-        public ContactHelper Remove (int p, ContactData contact)
+        public ContactHelper Remove (int p)
         {
             SelectContact(p);
             ConfirmDel();
@@ -146,7 +146,11 @@ namespace WebAddressbookTests
                 {
                     string Firstname = element.FindElement(By.XPath(".//td[3]")).Text; //забираем текст имени из строки
                     string Lastname = element.FindElement(By.XPath(".//td[2]")).Text; // забираем текст фамилии из строки
-                    contactCache.Add(new ContactData(Firstname, Lastname)); // формируем объект контакта с именем и фамилией
+
+                    contactCache.Add(new ContactData(Firstname, Lastname)
+                    {
+                        ContactId = element.FindElement(By.Name("selected[]")).GetAttribute("value")
+                    }); 
                 }
             }
             return new List<ContactData>(contactCache);
