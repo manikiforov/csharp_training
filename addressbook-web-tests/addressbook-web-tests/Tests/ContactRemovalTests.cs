@@ -16,13 +16,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            ContactData contact = new ContactData("");
-            contact.Lastname = "";
+            ContactData contact = new ContactData("","");
             contact.Nickname = "";
 
             app.Contacts.manager.Navigator.GoToHomePage();
 
-            if (!app.Contacts.IsElementPresent(By.Name("selected[]")))
+            if (!app.Contacts.ContactPresence())
             {
                 app.Contacts.Create(contact);
             }

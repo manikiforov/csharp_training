@@ -12,9 +12,10 @@ namespace WebAddressbookTests
         private string lastname = "";
         private string nickname = "";
 
-        public ContactData(string firstname)
+        public ContactData(string firstname, string lastname)
         {
             this.firstname = firstname;
+            this.lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -33,7 +34,7 @@ namespace WebAddressbookTests
 
         public override int GetHashCode()
         {
-            return Firstname.GetHashCode();
+            return Firstname.GetHashCode() + Lastname.GetHashCode();
         }
 
         public override string ToString()
@@ -47,7 +48,15 @@ namespace WebAddressbookTests
             {
                 return 1;
             }
-            return Firstname.CompareTo(other.Firstname);
+            if (Object.ReferenceEquals(other.Lastname, Lastname))
+            {
+                return Firstname.CompareTo(other.Firstname);
+            }
+            else
+            {
+                return Lastname.CompareTo(other.Lastname);
+
+            }
         }
 
         public string Firstname

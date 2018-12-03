@@ -101,7 +101,7 @@ namespace WebAddressbookTests
 
         private ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + " ]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + " ]")).Click();
             return this;
         }
 
@@ -111,15 +111,23 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool ContactPresence()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
         public List<ContactData> GetContactList()
         {
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("selected[]"));
+
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//*[@id='maintable']/tbody/tr[@name='entry']")); // организуем список элементов строк из таблицы контактов
 
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactData(element.Text));
+                string Firstname = element.FindElement(By.XPath(".//td[3]")).Text; //забираем текст имени из строки
+                string Lastname = element.FindElement(By.XPath(".//td[2]")).Text; // забираем текст фамилии из строки
+                contacts.Add(new ContactData(Firstname,Lastname)); // формируем объект контакта с именем и фамилией
             }
 
             return contacts;

@@ -85,6 +85,11 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool GroupPresence()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
         public List<GroupData> GetGroupList()
         {
             List<GroupData> groups = new List<GroupData>();

@@ -17,26 +17,25 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData contact = new ContactData("");
-            contact.Lastname = "";
+            ContactData contact = new ContactData("","");
             contact.Nickname = "";
 
-            ContactData newContact = new ContactData("Harry");
-            newContact.Lastname = "Potter";
+            ContactData newContact = new ContactData("Harry","Potter");
             newContact.Nickname = "Wizard";
 
             app.Contacts.manager.Navigator.GoToHomePage();
 
-            if (!app.Contacts.IsElementPresent(By.Name("selected[]")))
+            if (!app.Contacts.ContactPresence())
             {
                 app.Contacts.Create(contact);
             }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            app.Contacts.Modify(1, contact, newContact);
+            app.Contacts.Modify(0, contact, newContact);
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].Firstname = newContact.Firstname;
+            oldContacts[0].Lastname = newContact.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
