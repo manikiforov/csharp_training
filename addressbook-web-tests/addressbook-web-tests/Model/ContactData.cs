@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -20,7 +21,9 @@ namespace WebAddressbookTests
 
         public bool Equals(ContactData other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (Object.ReferenceEquals(other, null))
+#pragma warning restore IDE0041 // Use 'is null' check
             {
                 return false;
             }
@@ -44,7 +47,9 @@ namespace WebAddressbookTests
 
         public int CompareTo(ContactData other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (Object.ReferenceEquals(other, null))
+#pragma warning restore IDE0041 // Use 'is null' check
             {
                 return 1;
             }
@@ -111,7 +116,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                    return (Email + "\r\n" + Email2 + "\r\n" + Email3 + "\r\n").Trim();
                 }
             }
 
@@ -127,7 +132,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return item.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(item, "[ -()]", "") + "\r\n";
         }
     }
 }
