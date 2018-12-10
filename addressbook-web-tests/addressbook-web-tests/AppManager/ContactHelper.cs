@@ -119,6 +119,12 @@ namespace WebAddressbookTests
             return this;
         }
 
+        private ContactHelper ContactDetailsInformation (int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Details'])[" + (index+1) + " ]")).Click();
+            return this;
+        }
+
         private ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
@@ -161,7 +167,7 @@ namespace WebAddressbookTests
             return driver.FindElements(By.XPath("//*[@id='maintable']/tbody/tr[@name='entry']")).Count;
         }
 
-        internal ContactData GetContactInformationFromTable(int index)
+        public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.GoToHomePage();
 
@@ -181,7 +187,7 @@ namespace WebAddressbookTests
 
         }
 
-        internal ContactData GetContactInformationFromEditForm(int index)
+        public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(index);
@@ -198,6 +204,9 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
+            // for task 12
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+
             return new ContactData(firstName, lastName)
             {
                 Address = address,
@@ -206,9 +215,23 @@ namespace WebAddressbookTests
                 MobilePhone = mobilePhone,
                 Email = email,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+                // for task 12
+                Nickname = nickName
             };
 
+        }
+
+        public string GetDetailedContactInformation(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            ContactDetailsInformation(index);
+            string details = driver.FindElement(By.Id("content")).Text;
+            details = Regex.Replace(details, "H:", "");
+            details = Regex.Replace(details, "M:", "");
+            details = Regex.Replace(details, "W:", "");
+            details = Regex.Replace(details, "[ \n\r]", "");
+            return details;
         }
 
         public int GetNumberOfSearchResults()
