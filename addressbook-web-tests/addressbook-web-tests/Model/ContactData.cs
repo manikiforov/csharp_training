@@ -43,7 +43,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "Firstname = " + Firstname + "; Lastname = " + Lastname;
+            return "Firstname = " + Firstname + "\nLastname = " + Lastname + "\nNickname = " + Nickname;
         }
 
         public int CompareTo(ContactData other)
@@ -154,7 +154,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return Regex.Replace(item, "[ -()]", "") + "\r\n";
+            return Regex.Replace(item, "[- ()]", "") + "\r\n";
         }
     }
 }

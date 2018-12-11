@@ -17,7 +17,9 @@ namespace WebAddressbookTests
         public bool Equals(GroupData other)
         {
 
+#pragma warning disable IDE0041 // Use 'is null' check
             if (Object.ReferenceEquals(other, null))
+#pragma warning restore IDE0041 // Use 'is null' check
 
             {
                 return false;
@@ -37,13 +39,15 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name = " + Name;
+            return "name = " + Name + "\nheader = " + Header + "\nfooter = " + Footer;
         }
 
         public int CompareTo(GroupData other)
         {
 
+#pragma warning disable IDE0041 // Use 'is null' check
             if (Object.ReferenceEquals(other, null))
+#pragma warning restore IDE0041 // Use 'is null' check
 
             {
                 return 1;
