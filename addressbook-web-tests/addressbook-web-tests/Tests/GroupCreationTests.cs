@@ -4,6 +4,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -21,18 +23,7 @@ namespace WebAddressbookTests
             return groups;
         }
 
-        public static IEnumerable<GroupData> GroupDataFromFile()
-        {
-            List<GroupData> groups = new List<GroupData>();
-            string[] lines = File.ReadAllLines(@"groups.csv");
-            foreach (string l in lines)
-            {
-               string[] parts = l.Split(',');
-                groups.Add(new GroupData(parts[0]) { Header = parts[1], Footer = parts[2] });
-            }
-            return groups;
-        }
-
+                
         [Test, TestCaseSource("RandomGroupDataProvider")]
 
         public void GroupCreationTest(GroupData group)
@@ -52,9 +43,47 @@ namespace WebAddressbookTests
             
         }
 
-        [Test, TestCaseSource("GroupDataFromFile")]
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0]) { Header = parts[1], Footer = parts[2] });
+            }
+            return groups;
+        }
 
-        public void GroupCreationTestFromFile(GroupData group)
+
+        [Test, TestCaseSource("GroupDataFromCsvFile")]
+
+        public void GroupCreationTestFromCsvFile(GroupData group)
+        {
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Create(group);
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"groups.xml"));
+        }
+
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
+
+        public void GroupCreationTestFromXmlFile(GroupData group)
         {
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();

@@ -15,7 +15,7 @@ namespace addressbook_test_data_generators
         static void Main(string[] args)
         {
             int count = Convert.ToInt32(args[0]);
-            string format = args[3];
+            string format = args[2];
 
             List<GroupData> groups = new List<GroupData>();
             StreamWriter writer = new StreamWriter(args[1]);
