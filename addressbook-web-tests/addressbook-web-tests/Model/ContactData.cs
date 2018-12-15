@@ -12,7 +12,11 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEmails;
         private string detailsForm;
-        
+
+
+        public ContactData()
+        {
+        }
 
         public ContactData(string firstname, string lastname)
         {

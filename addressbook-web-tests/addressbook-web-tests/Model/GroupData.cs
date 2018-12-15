@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         {
         }
 
-                public GroupData(string name)
+        public GroupData(string name)
         {
             Name = name;
         }
