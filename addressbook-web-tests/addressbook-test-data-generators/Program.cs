@@ -86,7 +86,23 @@ namespace addressbook_test_data_generators
             app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Add();
             Excel.Worksheet sheet = wb.ActiveSheet;
-            sheet.Cells[1, 1] = "test";
+
+            int row = 1;
+            foreach (GroupData group in groups)
+            {
+                sheet.Cells[row, 1] = group.Name;
+                sheet.Cells[row, 2] = group.Header;
+                sheet.Cells[row, 3] = group.Footer;
+                row++;
+            }
+
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+            File.Delete(fullPath);
+            wb.SaveAs(Path.Combine(Directory.GetCurrentDirectory(), filename));
+
+            wb.Close();
+            app.Visible = false;
+            app.Quit();
         }
     }
 }
