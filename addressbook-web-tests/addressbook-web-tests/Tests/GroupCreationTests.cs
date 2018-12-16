@@ -15,6 +15,7 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
     {
+        /* READ DATA FROM RANDOM GENERATOR */
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -24,11 +25,10 @@ namespace WebAddressbookTests
             }
             return groups;
         }
-
-                
+                        
         [Test, TestCaseSource("RandomGroupDataProvider")]
 
-        public void GroupCreationTest(GroupData group)
+        public void GroupCreationTestFromRandomData(GroupData group)
         {
            
             List<GroupData> oldGroups = app.Groups.GetGroupList();
@@ -45,6 +45,8 @@ namespace WebAddressbookTests
             
         }
 
+        
+        /* READ DATA FROM CSV-FILE */
         public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -77,6 +79,8 @@ namespace WebAddressbookTests
 
         }
 
+        
+        /* READ DATA FROM XML-FILE */
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -102,6 +106,8 @@ namespace WebAddressbookTests
 
         }
 
+        
+        /* READ DATA FROM JSON-FILE */
         public static IEnumerable<GroupData> GroupDataFromJsonFile()
         {
             return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(@"groups.json"));
@@ -126,6 +132,8 @@ namespace WebAddressbookTests
 
         }
 
+        
+        /* READ DATA FROM EXCEL-FILE */
         public static IEnumerable<GroupData> GroupDataFromExcelFile()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -168,6 +176,8 @@ namespace WebAddressbookTests
 
         }
 
+        
+        /* CREATE GROUP WITH THE WRONG NAME */
         [Test]
         public void BadNameGroupCreationTest()
         {
