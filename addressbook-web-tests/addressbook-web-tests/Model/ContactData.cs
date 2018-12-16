@@ -12,6 +12,9 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEmails;
         private string detailsForm;
+        private string name;
+        private string nameBlock;
+        private string phonesBlock;
 
 
         public ContactData()
@@ -121,13 +124,73 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanMails(Email) + CleanMails(Email2) + CleanMails(Email3)).Trim();
+                    return (CleanItems(Email) + CleanItems(Email2) + CleanItems(Email3)).Trim();
                 }
             }
 
             set
             {
                 allEmails = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                if (name != null)
+                {
+                    return name;
+                }
+                else
+                {
+                    return (Clean(Firstname) + " " + Clean(Lastname)).Trim();
+                }
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public string NameBlock
+        {
+            get
+            {
+                if (nameBlock != null)
+                {
+                    return nameBlock;
+                }
+                else
+                {
+                    return (CleanItems(Name) + CleanItems(Nickname) + CleanItems(Address)).Trim();
+                }
+            }
+
+            set
+            {
+                nameBlock = value;
+            }
+        }
+
+        public string PhonesBlock
+        {
+            get
+            {
+                if (phonesBlock != null)
+                {
+                    return phonesBlock;
+                }
+                else
+                {
+                    return (CleanHomePhone(HomePhone) + CleanMobilePhone(MobilePhone) + CleanWorkPhone(WorkPhone)).Trim();
+                }
+            }
+
+            set
+            {
+                phonesBlock = value;
             }
         }
 
@@ -142,7 +205,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Regex.Replace((Firstname + Lastname + Nickname + Address + HomePhone + MobilePhone + WorkPhone + Email + Email2 + Email3), " ", "");
+                    return (CleanBlocks(NameBlock) + CleanBlocks(PhonesBlock) + CleanBlocks(AllEmails)).Trim();
                 }
             }
 
@@ -161,13 +224,59 @@ namespace WebAddressbookTests
             return Regex.Replace(phone, "[- ()]", "") + "\r\n";
         }
 
-        private string CleanMails (string mail)
+        private string CleanItems (string item)
         {
-            if (mail == null || mail == "")
+            if (item == null || item == "")
             {
                 return "";
             }
-            return (mail + "\r\n");
+            return (item + "\r\n");
         }
+
+        private string Clean (string item)
+        {
+            if (item == null || item == "")
+            {
+                return "";
+            }
+            return item;
+        }
+
+        private string CleanHomePhone(string homephone)
+        {
+            if (homephone == null || homephone == "")
+            {
+                return "";
+            }
+            return ("H: " + homephone + "\r\n");
+        }
+
+        private string CleanMobilePhone(string mobilephone)
+        {
+            if (mobilephone == null || mobilephone == "")
+            {
+                return "";
+            }
+            return ("M: " + mobilephone + "\r\n");
+        }
+
+        private string CleanWorkPhone(string workphone)
+        {
+            if (workphone == null || workphone == "")
+            {
+                return "";
+            }
+            return ("W: " + workphone + "\r\n");
+        }
+
+        private string CleanBlocks (string block)
+        {
+            if (block == null || block == "")
+            {
+                return "";
+            }
+            return (block + "\r\n" + "\r\n");
+        }
+
     }
 }

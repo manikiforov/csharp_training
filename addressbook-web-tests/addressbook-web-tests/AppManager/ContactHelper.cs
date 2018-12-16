@@ -227,10 +227,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             ContactDetailsInformation(index);
             string details = driver.FindElement(By.Id("content")).Text;
-            details = Regex.Replace(details, "H:", "");
-            details = Regex.Replace(details, "M:", "");
-            details = Regex.Replace(details, "W:", "");
-            details = Regex.Replace(details, "[ \n\r]", "");
             return details;
         }
 

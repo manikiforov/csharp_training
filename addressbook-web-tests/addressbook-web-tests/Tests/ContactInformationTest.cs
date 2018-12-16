@@ -32,8 +32,8 @@ namespace WebAddressbookTests
         public void TestContactInformationDetails()
         {
             
-            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(5);
-            string detailedContact = app.Contacts.GetDetailedContactInformation(5);
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
+            string detailedContact = app.Contacts.GetDetailedContactInformation(0);
 
             // verification
             Assert.AreEqual(detailedContact, fromForm.DetailsForm);
