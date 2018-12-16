@@ -121,7 +121,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanMails(Email) + "\r\n" + CleanMails(Email2) + "\r\n" + CleanMails(Email3) + "\r\n").Trim();
+                    return (CleanMails(Email) + CleanMails(Email2) + CleanMails(Email3)).Trim();
                 }
             }
 
@@ -167,7 +167,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return mail;
+            return (mail + "\r\n");
         }
     }
 }
