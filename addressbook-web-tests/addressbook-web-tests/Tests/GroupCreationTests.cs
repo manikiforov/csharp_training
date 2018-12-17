@@ -207,12 +207,12 @@ namespace WebAddressbookTests
             DateTime start = DateTime.Now;
             List<GroupData> fromUI = app.Groups.GetGroupList();
             DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            System.Console.Out.WriteLine("From UI " + end.Subtract(start));
 
             start = DateTime.Now;
             List<GroupData> fromDb = GroupData.GetAll();
             end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            System.Console.Out.WriteLine("From DB " + end.Subtract(start));
         }
 
     }
