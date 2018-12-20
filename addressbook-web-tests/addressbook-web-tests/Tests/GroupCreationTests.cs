@@ -217,7 +217,7 @@ namespace WebAddressbookTests
         }
 
         [Test]
-        public void TestDBConnectivety74()
+        public void TestDBConnectivety()
         {
             foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
             {
