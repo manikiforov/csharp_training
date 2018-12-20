@@ -200,7 +200,8 @@ namespace WebAddressbookTests
 
         }
 
-        /* CREATE GROUP FROM DB */
+        /* TEST DB IMPLEMENTATION */
+
         [Test]
         public void TestDBConnectivety()
         {
@@ -213,6 +214,15 @@ namespace WebAddressbookTests
             List<GroupData> fromDb = GroupData.GetAll();
             end = DateTime.Now;
             System.Console.Out.WriteLine("From DB " + end.Subtract(start));
+        }
+
+        [Test]
+        public void TestDBConnectivety74()
+        {
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                System.Console.Out.WriteLine(contact.Deprecated + "\r\n");
+            }
         }
 
     }
