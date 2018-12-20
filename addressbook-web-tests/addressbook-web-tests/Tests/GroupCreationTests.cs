@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         /* READ DATA FROM RANDOM GENERATOR */
         public static IEnumerable<GroupData> RandomGroupDataProvider()
@@ -22,7 +22,7 @@ namespace WebAddressbookTests
             List<GroupData> groups = new List<GroupData>();
             for (int i=0; i<5; i++)
             {
-                groups.Add(new GroupData(GenerateRandomString(30)) { Header = GenerateRandomString(100), Footer = GenerateRandomString(100) });
+                groups.Add(new GroupData(GenerateRandomString(10)) { Header = GenerateRandomString(10), Footer = GenerateRandomString(10) });
             }
             return groups;
         }
@@ -32,13 +32,13 @@ namespace WebAddressbookTests
         public void GroupCreationTestFromRandomData(GroupData group)
         {
            
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -119,13 +119,13 @@ namespace WebAddressbookTests
         public void GroupCreationTestFromJsonFile(GroupData group)
         {
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -139,7 +139,7 @@ namespace WebAddressbookTests
         {
             List<GroupData> groups = new List<GroupData>();
             Excel.Application app = new Excel.Application();
-            app.Visible = true;
+            //app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range = sheet.UsedRange;
@@ -153,7 +153,7 @@ namespace WebAddressbookTests
                 });
             }
             wb.Close();
-            app.Visible = false;
+            //app.Visible = false;
             app.Quit();
             return groups;
         }

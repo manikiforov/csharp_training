@@ -136,7 +136,7 @@ namespace WebAddressbookTests
         {
             List<ContactData> contacts = new List<ContactData>();
             Excel.Application app = new Excel.Application();
-            app.Visible = true;
+            //app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"contacts.xlsx"));
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range = sheet.UsedRange;
@@ -150,7 +150,7 @@ namespace WebAddressbookTests
                 });
             }
             wb.Close();
-            app.Visible = false;
+            //app.Visible = false;
             app.Quit();
             return contacts;
         }

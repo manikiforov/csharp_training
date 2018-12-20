@@ -163,7 +163,7 @@ namespace addressbook_test_data_generators
         static void writeGroupsToExcelFile(List<GroupData> groups, string filename)
         {
             Excel.Application app = new Excel.Application();
-            app.Visible = true;
+            //app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Add();
             Excel.Worksheet sheet = wb.ActiveSheet;
 
@@ -181,14 +181,14 @@ namespace addressbook_test_data_generators
             wb.SaveAs(Path.Combine(Directory.GetCurrentDirectory(), filename));
 
             wb.Close();
-            app.Visible = false;
+            //app.Visible = false;
             app.Quit();
         }
 
         static void writeContactsToExcelFile(List<ContactData> contacts, string filename)
         {
             Excel.Application app = new Excel.Application();
-            app.Visible = true;
+            //app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Add();
             Excel.Worksheet sheet = wb.ActiveSheet;
 
@@ -206,7 +206,7 @@ namespace addressbook_test_data_generators
             wb.SaveAs(Path.Combine(Directory.GetCurrentDirectory(), filename));
 
             wb.Close();
-            app.Visible = false;
+            //app.Visible = false;
             app.Quit();
         }
     }
