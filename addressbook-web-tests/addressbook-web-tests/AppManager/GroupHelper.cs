@@ -45,7 +45,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper RemoveFromDb (GroupData group)
+        public GroupHelper Remove (GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
 

@@ -29,15 +29,15 @@ namespace WebAddressbookTests
 
             List<GroupData> oldGroups = GroupData.GetAll();
 
-            GroupData toBeRemoved = oldGroups[0];
+            GroupData toBeRemoved = oldGroups[1];
 
-            app.Groups.RemoveFromDb(toBeRemoved);
+            app.Groups.Remove(toBeRemoved);
 
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = GroupData.GetAll();
 
-            oldGroups.RemoveAt(0);
+            oldGroups.RemoveAt(1);
             Assert.AreEqual(oldGroups, newGroups);
 
             foreach (GroupData group in newGroups)

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using LinqToDB.Mapping;
-using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
@@ -77,7 +76,7 @@ namespace WebAddressbookTests
         }
 
 
-        [Column(Name = "id"), PrimaryKey]
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string ContactId { get; set; }
 
         [Column(Name = "firstname"), NotNull]
@@ -88,7 +87,10 @@ namespace WebAddressbookTests
 
         [Column(Name = "nickname"), NotNull]
         public string Nickname { get; set; }
-        
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
         public string Address { get; set; }
 
         public string HomePhone { get; set; }
@@ -103,9 +105,7 @@ namespace WebAddressbookTests
 
         public string Email3 { get; set; }
 
-        [Column(Name = "deprecated")]
-        public string Deprecated { get; set; }
-
+        
         public string AllPhones
         {
             get

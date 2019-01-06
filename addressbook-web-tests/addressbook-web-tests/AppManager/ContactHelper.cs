@@ -40,7 +40,7 @@ namespace WebAddressbookTests
         }
 
        
-        public ContactHelper Remove (int p)
+        public ContactHelper Remove(int p)
         {
             SelectContact(p);
             ConfirmDel();
@@ -50,9 +50,25 @@ namespace WebAddressbookTests
               
         }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            SelectContactFromDb(contact.ContactId);
+            ConfirmDel();
+            DeleteContact();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + " ]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContactFromDb (String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
             return this;
         }
 
@@ -245,6 +261,7 @@ namespace WebAddressbookTests
             SelectContact(contact.ContactId);
             SelectGroupToAdd(group.Name);
             CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
         private void ClearGroupFilter()
@@ -254,7 +271,7 @@ namespace WebAddressbookTests
 
         private void SelectContact(string contactId)
         {
-            driver.FindElement(By.Id(contactId));
+            driver.FindElement(By.Id(contactId)).Click();
         }
 
         private void SelectGroupToAdd(string name)
