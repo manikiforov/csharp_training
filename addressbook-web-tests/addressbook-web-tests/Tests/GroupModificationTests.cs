@@ -21,7 +21,7 @@ namespace WebAddressbookTests
             groupSpare.Header = "";
             groupSpare.Footer = "";
 
-            GroupData newData = new GroupData("ppp");
+            GroupData newData = new GroupData("hydra");
             newData.Header = null;
             newData.Footer = null;
 
@@ -32,16 +32,17 @@ namespace WebAddressbookTests
                 app.Groups.Create(groupSpare);
             }
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-            GroupData oldData = oldGroups[0];
+            List<GroupData> oldGroups = GroupData.GetAll();
 
-            app.Groups.Modify(0, newData);
+            GroupData oldData = oldGroups[4];
+
+            app.Groups.Modify(oldData, newData);
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = newData.Name;
+            List<GroupData> newGroups = GroupData.GetAll();
+            oldData.Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);

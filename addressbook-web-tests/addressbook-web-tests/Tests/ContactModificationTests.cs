@@ -12,7 +12,7 @@ namespace WebAddressbookTests
 {
     [TestFixture]
 
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -20,8 +20,8 @@ namespace WebAddressbookTests
             ContactData contactSpare = new ContactData("","");
             contactSpare.Nickname = "";
 
-            ContactData newContact = new ContactData("Harry","Potter");
-            newContact.Nickname = "Wizard";
+            ContactData newContact = new ContactData("Darth","Wader");
+            newContact.Nickname = "Sith";
 
             app.Contacts.manager.Navigator.GoToHomePage();
 
@@ -30,16 +30,16 @@ namespace WebAddressbookTests
                 app.Contacts.Create(contactSpare);
             }
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
-            ContactData oldContactData = oldContacts[0];
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData oldContactData = oldContacts[5];
 
-            app.Contacts.Modify(0, newContact);
+            app.Contacts.Modify(oldContactData, newContact);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts[0].Firstname = newContact.Firstname;
-            oldContacts[0].Lastname = newContact.Lastname;
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContactData.Firstname = newContact.Firstname;
+            oldContactData.Lastname = newContact.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);

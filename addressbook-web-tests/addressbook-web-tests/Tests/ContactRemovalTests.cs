@@ -11,7 +11,7 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
@@ -28,7 +28,7 @@ namespace WebAddressbookTests
 
             List<ContactData> oldContacts = ContactData.GetAll();
 
-            ContactData ConToBeRemoved = oldContacts[1];
+            ContactData ConToBeRemoved = oldContacts[7];
 
             app.Contacts.Remove(ConToBeRemoved);
 
@@ -36,7 +36,7 @@ namespace WebAddressbookTests
 
             List<ContactData> newContacts = ContactData.GetAll();
 
-            oldContacts.RemoveAt(1);
+            oldContacts.RemoveAt(7);
             Assert.AreEqual(oldContacts, newContacts);
 
             foreach (ContactData contact in newContacts)

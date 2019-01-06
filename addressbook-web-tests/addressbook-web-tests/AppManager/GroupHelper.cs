@@ -36,7 +36,17 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
         }
-                
+
+        public GroupHelper Modify(GroupData oldData, GroupData newData)
+        {
+            SelectGroupFromDb(oldData.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         public GroupHelper Remove(int p)
         {
             SelectGroup(p);

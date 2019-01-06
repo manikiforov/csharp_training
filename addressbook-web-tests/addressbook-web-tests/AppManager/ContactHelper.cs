@@ -39,7 +39,16 @@ namespace WebAddressbookTests
             return this;
         }
 
-       
+        public ContactHelper Modify(ContactData oldData, ContactData newData)
+        {
+            SelectContactFromDb(oldData.ContactId);
+            InitContactModification(oldData.ContactId);
+            InputContactData(newData);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         public ContactHelper Remove(int p)
         {
             SelectContact(p);
@@ -125,6 +134,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            driver.FindElement(By.CssSelector("div.msgbox"));
             contactCache = null;
             return this;
         }
@@ -132,6 +142,12 @@ namespace WebAddressbookTests
         private ContactHelper InitContactModification(int index)
         {
             driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + " ]")).Click();
+            return this;
+        }
+
+        private ContactHelper InitContactModification(string id)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + id + "']")).Click();
             return this;
         }
 
