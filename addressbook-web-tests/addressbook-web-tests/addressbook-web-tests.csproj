@@ -99,6 +99,7 @@
     <Compile Include="AppManager\SelectSubmitHelper.cs" />
     <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\LoginTests.cs" />
+    <Compile Include="Tests\RemovalContactFromGroupTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

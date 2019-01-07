@@ -300,7 +300,17 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("add")).Click();
         }
 
-       
+        public void RemoveContactFromGroup (GroupData group, ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            ChooseGroupFilter(group);
+            SelectContact(contact.ContactId);
+            DeleteContact();
+        }
 
+       public void ChooseGroupFilter (GroupData group)
+       {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(group.Name);
+       }
     }
 }
