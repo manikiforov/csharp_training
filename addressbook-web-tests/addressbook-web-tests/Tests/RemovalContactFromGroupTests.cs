@@ -13,8 +13,28 @@ namespace WebAddressbookTests
 
         public void TestRemovalContactFromGroup()
         {
+            app.Navigator.GoToHomePage();
+            if (!app.Contacts.ContactPresence())
+            {
+                ContactData ReserveContact = new ContactData("ReserveName", "ReserveLastName");
+                app.Contacts.Create(ReserveContact);
+            }
+
+            app.Navigator.GoToGroupsPage();
+            if (!app.Groups.GroupPresence())
+            {
+                GroupData ReserveGroup = new GroupData("ExtraGroup");
+                app.Groups.Create(ReserveGroup);
+            }
+
             GroupData group = GroupData.GetAll().Last();
             List<ContactData> oldContactList = group.GetContacts();
+
+            //if (oldContactList == null)
+            //{
+                //int index = System.Array.IndexOf()
+            //}
+
             ContactData contact = oldContactList.First();
             
             app.Contacts.RemoveContactFromGroup(group, contact);
