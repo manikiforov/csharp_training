@@ -58,5 +58,11 @@ namespace addressbook_tests_autoit
             aux.ControlClick(WINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d512");
             aux.WinWait(GROUPWINTITLE);
         }
+
+        public int GroupsNumber()
+        {
+            OpenGroupsDialogue();
+            return Convert.ToInt32(aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "GetItemCount", "#0", ""));
+        }
     }
 }
